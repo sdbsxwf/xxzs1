@@ -316,7 +316,7 @@ ui.yjxtz.on("click", function() {
 function gx() {
     try {
         log("更新中……");
-        var url = "https://github.com/sdbsxwf/xxzs/archive/master.zip";
+        var url = "https://github.com/sdbsxwf/xxzs1/archive/master.zip";
         var r = http.get(url, {
             headers: {
                 'Accept-Language': 'zh-cn,zh;q=0.5',
@@ -391,7 +391,7 @@ threads.start(function() {
         //toastLog(hrlss)
         if (hrlss.indexOf("爱学习_V4.1") == -1) {
             log("gx");
-             // gx();
+              gx();
         } else {
             log("bygx");
         }
