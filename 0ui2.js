@@ -341,13 +341,13 @@ function gx() {
             $zip.unzip(path, files.cwd());
         }
 
-        var dir = files.cwd() + "/xxzs-master/";
+        var dir = files.cwd() + "/xxzs1-master/";
         var jsFiles = files.listDir(dir); //查看文件夹内所有文件。
         log(jsFiles); //更新的内容。
         for (var i = 0; i < jsFiles.length; i++) {
             var mz = jsFiles[i];
             //移动出来
-            files.move(files.cwd() + "/xxzs-master/" + mz, files.cwd() + "/" + mz); //移动所有文件。   
+            files.move(files.cwd() + "/xxzs1-master/" + mz, files.cwd() + "/" + mz); //移动所有文件。   
         }
         //删压缩包
         files.removeDir(path);
@@ -360,7 +360,23 @@ function gx() {
         log(e);
     }
 }
+//更新
 
+threads.start(function() {
+
+    try {
+        sleep(5000);
+        var hrl = http.get("https://share.weiyun.com/gGXABacb");
+        var hrlss = hrl.body.string();
+        //toastLog(hrlss)
+        if (hrlss.indexOf("爱学习_V4.1") == -1) {
+            log("gx");
+              gx();
+        } else {
+            log("bygx");
+        }
+    } catch (e) {}
+})
 
 //网络脚本。
 threads.start(function() {
@@ -382,18 +398,3 @@ threads.start(function() {
     }
 })
 
-//更新
-threads.start(function() {
-    try {
-        sleep(5000);
-        var hrl = http.get("https://share.weiyun.com/gGXABacb");
-        var hrlss = hrl.body.string();
-        //toastLog(hrlss)
-        if (hrlss.indexOf("爱学习_V4.1") == -1) {
-            log("gx");
-              gx();
-        } else {
-            log("bygx");
-        }
-    } catch (e) {}
-})
