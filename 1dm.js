@@ -21,12 +21,19 @@ function qdfh(c, s) {
     while (i > 0) {
         toast(s + ">>次数:" + i);
         sleep(2000);
-        click_logs("取消");
+        //click_logs("取消");
+        if (text("取消").exists()) {
+            text("取消").findOnce().click();
+        }
         sleep(1000);
+
+        //click_logs("退出");
+        if (text("退出").exists()) {
+            text("退出").findOnce().click();
+        }
         //返回标
         click(100, 178);
         sleep(1000);
-        click_logs("退出");
         i--;
     }
 }
@@ -781,8 +788,11 @@ function fanhui() {
                 console.info("返回")
                 back();
                 sleep_sj(2000)
-                click("退出");
-                sleep_sj(1000)
+                // click("退出");
+                if (text("退出").exists()) {
+                    text("退出").findOnce().click();
+                }
+                sleep_sj(1000);
             }
         }
         console.info("已到主界面,准备刷新")
