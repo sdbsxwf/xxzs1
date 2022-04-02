@@ -22,6 +22,7 @@ var window = floaty.window(
         <button id="dt" text="自动答题" w="90" h="40" bg="#77ffffff"/>
         <button id="dgdt" text="单个答题" w="90" h="40" bg="#77ffffff"/>
        <button id="dgbd" text="单答不点" w="90" h="40" bg="#77ffffff"/>
+    <button id="csd" text="测试点" w="90" h="40" bg="#77ffffff"/>
         <button id="tz" text="停止" w="90" h="40" bg="#77ffffff"/>
     </vertical>
 );
@@ -114,6 +115,13 @@ window.dgbd.click(function() {
         yijianxue.单答不点();
     })
 })
+
+window.dgbd.click(function() {
+    threads.start(function() {
+        yijianxue.测试答();
+    })
+})
+
 
 window.tz.click(function() {
     threads.start(function() {

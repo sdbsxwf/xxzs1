@@ -50,7 +50,9 @@ var PrefCheckBox = (function() {
 ui.layout(
     <vertical>
         <appbar>
-            <toolbar id="toolbar" title="爱学习_V4.1.1" />
+    
+         <toolbar id="toolbar" title="爱学习_V4.1.1" />
+    
         </appbar>
         <viewpager id="vv">
             <ScrollView>

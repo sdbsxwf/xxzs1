@@ -34,6 +34,7 @@ function qdfh(c, s) {
         //返回标
         click(100, 178);
         sleep(1000);
+        click("稍后提醒");
         i--;
     }
 }
