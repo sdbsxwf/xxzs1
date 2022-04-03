@@ -102,7 +102,7 @@ window.app.click(function() {
 window.dt.click(function() {
     threads.start(function() {
         yijianxue.多答();
-    }
+    
     })
 })
 
@@ -117,7 +117,7 @@ window.dgbd.click(function() {
     })
 })
 
-window.dgbd.click(function() {
+window.csd.click(function() {
     threads.start(function() {
         yijianxue.测试答();
     })

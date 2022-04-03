@@ -505,8 +505,9 @@ yijianxue.单答s = function() {
     var z3 = z.right
     var z4 = z.bottom
     log(z1 + "," + z2 + "," + z3 + "," + z4);
-    var d = jietu(Number(z1), Number(z2), device.width - Number(z1), device.height - Number(z2));
-    if (d == "") {
+    sleep(200);
+    var d = jietu(Number(z1), Number(z2), device.width - Number(z1)-80, device.height - Number(z2)-200);
+    if (d[0]["words"] == "") {
         d = "失败"
     }
     var jie = ""; //建空列表,放结果
@@ -624,9 +625,9 @@ yijianxue.单答不点 = function() {
         if (t == "") {
             t = "失败"
         }
-        log(t);
+      //  log(t);
         var jie = ""; //建空列表,放结果
-        var ds = zl(d[0]["words"]);
+        var ds = zl(t[0]["words"]);
         for (var i = 0; i < tikus.length; i++) {
             var tks = zl(tikus[i].wenti);
             var jieguo = tks.indexOf(ds); //问题匹配筛选。
@@ -996,11 +997,10 @@ yijianxue.积分 = function() {
 function jietu(xx, yy, kk, gg) {
     var img = captureScreen();
     //  var src = images.read("1.png");
-
-
-
     var clip = images.clip(img, xx, yy, kk, gg);
-    images.save(clip, "2.png", "png", 50);
+    //二值化
+    var aa=images.threshold(clip, 100, 255, "BINARY")
+    images.save(aa, "2.png", "png", 50);
     // toastLog(t);
     var t = Baidu_OCR("2.png");
     // 回收图片
