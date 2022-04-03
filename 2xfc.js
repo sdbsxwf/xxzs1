@@ -102,12 +102,13 @@ window.app.click(function() {
 window.dt.click(function() {
     threads.start(function() {
         yijianxue.多答();
+    }
     })
 })
 
 window.dgdt.click(function() {
     threads.start(function() {
-        yijianxue.单答();
+        yijianxue.单答s();
     })
 })
 window.dgbd.click(function() {

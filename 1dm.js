@@ -492,6 +492,125 @@ yijianxue.单答 = function() {
 
     } catch (e) {}
 }
+
+////单个答题2。
+//childCount
+yijianxue.单答s = function() {
+    // try {
+    log("已点答题按键");
+    var ti = depth(29).className("android.widget.ListView").findOne(25000);
+    var z = ti.parent().bounds()
+    var z1 = z.left
+    var z2 = z.top
+    var z3 = z.right
+    var z4 = z.bottom
+    log(z1 + "," + z2 + "," + z3 + "," + z4);
+    var d = jietu(Number(z1), Number(z2), device.width - Number(z1), device.height - Number(z2));
+    if (d == "") {
+        d = "失败"
+    }
+    var jie = ""; //建空列表,放结果
+    for (var i = 0; i < tikus.length; i++) {
+        var ds = zl(d[0]["words"]);
+        var tks = zl(tikus[i].wenti);
+        var jieguo = tks.indexOf(ds); //问题匹配筛选。
+        if (jieguo >= 0) {
+            jie += tikus[i].da;
+            jie += tikus[i].daan;
+            jie += "\n"
+            // break;
+        }
+    }
+    try {
+        log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
+    } catch (e) {}
+    if (jie == "") {
+        jie = "没找到答案";
+    }
+    var jies = zl(jie);
+
+    var z0 = ti.children();
+    for (var k = 1; k < d.length; k++) {
+        var x0 = d[k]["words"];
+        var xs0 = zl(x0)
+        if (xs0 != "") {
+            var xs1 = xs0.slice(0, 5)
+            var j1 = Number(x0.indexOf("A."));
+            if (j1 != -1) {
+                // toastLog("选择:A");
+                //   var xs0 = zl(x0)
+                //   var xs1 = xs0.slice(0, 5)
+                // toastLog(xs1)
+                if (jies.indexOf(xs1) != -1) {
+                    toastLog("点A" + xs1)
+                    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
+                    sleep(100);
+                    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
+                    break;
+
+                }
+            }
+
+            var j1 = Number(x0.indexOf("B."));
+            if (j1 != -1) {
+                //  toastLog("选择:B");
+                //    var xs0 = zl(x0)
+                //    var xs1 = xs0.slice(0, 5)
+
+                if (jies.indexOf(xs1) != -1) {
+                    toastLog("点B" + xs1)
+                    click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
+                    sleep(100);
+                    click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
+                    break;
+
+                }
+            }
+
+            var j1 = Number(x0.indexOf("C."));
+            if (j1 != -1) {
+                //   toastLog("选择:C");
+                //  var xs0 = zl(x0)
+                //   var xs1 = xs0.slice(0, 5)
+
+                if (jies.indexOf(xs1) != -1) {
+                    toastLog("点C" + xs1)
+                    click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
+                    sleep(100);
+                    click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
+                    break;
+
+                }
+            }
+            var j1 = Number(x0.indexOf("D."));
+            if (j1 != -1) {
+                //  toastLog("选择:D");
+                //    var xs0 = zl(x0)
+                //   var xs1 = xs0.slice(0, 5)
+
+                if (jies.indexOf(xs1) != -1) {
+                    toastLog("点D" + xs1)
+                    click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
+                    sleep(100);
+                    click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
+                    break;
+
+                }
+            }
+
+        }
+    }
+    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
+    sleep(100);
+    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
+
+    //   } catch (e) {
+    //     toastLog("错")
+    //  }
+}
+
+
+
 ////单个答题。
 yijianxue.单答不点 = function() {
     try {
@@ -507,10 +626,10 @@ yijianxue.单答不点 = function() {
         }
         log(t);
         var jie = ""; //建空列表,放结果
-
+        var ds = zl(d[0]["words"]);
         for (var i = 0; i < tikus.length; i++) {
             var tks = zl(tikus[i].wenti);
-            var jieguo = tks.indexOf(t); //问题匹配筛选。
+            var jieguo = tks.indexOf(ds); //问题匹配筛选。
             if (jieguo >= 0) {
                 jie += tikus[i].da;
                 jie += tikus[i].daan;
@@ -523,12 +642,12 @@ yijianxue.单答不点 = function() {
 }
 //循环答题
 yijianxue.多答 = function() {
-    setScreenMetrics(1080, 2408); //分辨率设置。
+    //   setScreenMetrics(1080, 2408); //分辨率设置。
     toastLog("答");
-    sleep(7000);
+    //   sleep(7000);
     for (var i = 0; i < 10; i++) {
-        toastLog(i + "有");
-        yijianxue.单答();
+        //   toastLog(i + "有");
+        yijianxue.单答s();
         sleep(2000);
         if (text("继续挑战").exists()) {
             break;
@@ -876,16 +995,19 @@ yijianxue.积分 = function() {
 //截图
 function jietu(xx, yy, kk, gg) {
     var img = captureScreen();
-    // var clip=images.clip(img, tis.left, tis.top, tis.width(), tis.height())
-    var clip = images.clip(img, xx, yy, kk, gg)
-    images.save(clip, "1.png", "png", 50);
+    //  var src = images.read("1.png");
+
+
+
+    var clip = images.clip(img, xx, yy, kk, gg);
+    images.save(clip, "2.png", "png", 50);
     // toastLog(t);
-    var t = Baidu_OCR("1.png");
+    var t = Baidu_OCR("2.png");
     // 回收图片
-    img.recycle();
-    clip.recycle();
-    var aa = zl(t)
-    return aa
+    // img.recycle();
+    //   clip.recycle();
+    // var aa = zl(t)
+    return t
 }
 //图片转文字
 function Baidu_OCR(imgFile) {
@@ -904,8 +1026,8 @@ function Baidu_OCR(imgFile) {
         //  log(res.body.string());
         ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
         var strs = JSON.parse(res.body.string());
-        //   var strss = strs["words_result"][0]["words"];
-        var strss = strs.words_result.map(val => val.words).join('');
+        var strss = strs["words_result"]; //[0]["words"];
+        // var strss = strs.words_result.map(val => val.words).join('');
         log(strs);
         return strss;
     } catch (e) {
