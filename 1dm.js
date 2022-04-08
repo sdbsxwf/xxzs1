@@ -506,7 +506,7 @@ yijianxue.单答s = function() {
     var z4 = z.bottom
     log(z1 + "," + z2 + "," + z3 + "," + z4);
     sleep(200);
-    var d = jietu(Number(z1), Number(z2), device.width - Number(z1)-80, device.height - Number(z2)-200);
+    var d = jietu(Number(z1), Number(z2), device.width - Number(z1) - 80, device.height - Number(z2) - 200);
     if (d[0]["words"] == "") {
         d = "失败"
     }
@@ -528,12 +528,12 @@ yijianxue.单答s = function() {
     if (jie == "") {
         jie = "没找到答案";
     }
-    var jies = zl(jie);
+    var jies = zls(jie);
 
     var z0 = ti.children();
     for (var k = 1; k < d.length; k++) {
         var x0 = d[k]["words"];
-        var xs0 = zl(x0)
+        var xs0 = zls(x0)
         if (xs0 != "") {
             var xs1 = xs0.slice(0, 5)
             var j1 = Number(x0.indexOf("A."));
@@ -625,7 +625,7 @@ yijianxue.单答不点 = function() {
         if (t == "") {
             t = "失败"
         }
-      //  log(t);
+        //  log(t);
         var jie = ""; //建空列表,放结果
         var ds = zl(t[0]["words"]);
         for (var i = 0; i < tikus.length; i++) {
@@ -999,13 +999,14 @@ function jietu(xx, yy, kk, gg) {
     //  var src = images.read("1.png");
     var clip = images.clip(img, xx, yy, kk, gg);
     //二值化
-    var aa=images.threshold(clip, 100, 255, "BINARY")
+    var aa = images.threshold(clip, 100, 255, "BINARY")
     images.save(aa, "2.png", "png", 50);
     // toastLog(t);
     var t = Baidu_OCR("2.png");
     // 回收图片
     // img.recycle();
-    //   clip.recycle();
+    clip.recycle();
+    aa.recycle();
     // var aa = zl(t)
     return t
 }
@@ -1014,7 +1015,8 @@ function Baidu_OCR(imgFile) {
     try {
         access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
         url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
-        imag64 = images.toBase64(images.read(imgFile), "png", 100);
+        var img = images.read(imgFile);
+        var imag64 = images.toBase64(img, "png", 100);
         res = http.post(url, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -1029,6 +1031,8 @@ function Baidu_OCR(imgFile) {
         var strss = strs["words_result"]; //[0]["words"];
         // var strss = strs.words_result.map(val => val.words).join('');
         log(strs);
+        img.recycle();
+      //  imag64.recycle();
         return strss;
     } catch (e) {
         return "识别文字失败"
