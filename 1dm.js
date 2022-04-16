@@ -609,6 +609,8 @@ yijianxue.单答s = function() {
     //     toastLog("错")
     //  }
 }
+
+/*
 //但他不点截图用
 function jietus(xx, yy, kk, gg) {
     //  toastLog("a");
@@ -661,12 +663,13 @@ yijianxue.单答不点 = function() {
         //   sleep(100);
         // toastLog(kk.bounds().left+" "+kk.bounds().top+" "+kk.bounds().width()+" "+ kk.bounds().height())     
         // var t = jietu(91, 660, 915, 80);
-        var dx = 1;
+        var dx ="";
+        var t="";
         var a = 读("c", "zb", "91,660,915,80").split(",");
         while (true) {
             do {
 
-                var t = jietus(Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
+                t = jietus(Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
                 sleep(500);
             } while (dx == t)
 
@@ -703,6 +706,120 @@ yijianxue.单答不点 = function() {
         }
     } catch (e) {}
 }
+
+
+*/
+
+//但他不点截图用
+function jietus(xx, yy, kk, gg) {
+    //  toastLog("a");
+    var img = captureScreen();
+    //  var src = images.read("1.png");
+    var clip = images.clip(img, xx, yy, kk, gg);
+    //二值化
+    var aa = images.threshold(clip, 100, 255, "BINARY")
+    images.save(aa, "2.png", "png", 50);
+    var imgPath = files.path("./2.png");
+    let Sizes = (new java.io.File(imgPath)).length(); //取得文件大小-kb
+    // toastLog("dd" + Sizes)
+    clip.recycle();
+    aa.recycle();
+    return Sizes
+}
+//截图用图片转文字
+function Baidu_OCRs(imgFile) {
+    try {
+        access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
+        url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
+        var img = images.read(imgFile);
+        var imag64 = images.toBase64(img, "png", 100);
+        res = http.post(url, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            image: imag64,
+            image_type: "BASE64",
+            language_type: "CHN_ENG"
+        });
+        //  log(res.body.string());
+        ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
+        var strs = JSON.parse(res.body.string());
+        var strss = strs["words_result"]; //[0]["words"];
+        // var strss = strs.words_result.map(val => val.words).join('');
+        //    log(strs);
+        img.recycle();
+        //  imag64.recycle();
+        return strss;
+    } catch (e) {
+        return "识别文字失败"
+    }
+}
+////单个答题。
+yijianxue.单答不点 = function() {
+    try {
+        log("开始截图答题……，按音量上键为关闭");
+        while (true) {
+
+            var a = 读("c", "zb", "91,660,915,80").split(",");
+            var img = captureScreen();
+            var clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
+            sleep(100);
+            images.save(clipls, "1.png", "png", 50);
+
+            var xts = images.read("1.png");
+            var xt = images.read("2.png");
+            var p = findImage(xt, xts);
+            //    var p = findImage(img, xt, {
+            //        region: [Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3])]
+            //     })
+
+            if (p) {
+                // log("y")
+                sleep(500);
+            } else {
+                //没找到
+                //  log("m")
+                //   var clip = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
+                //   sleep(100);
+                images.save(xts, "2.png", "png", 50);
+                //      clip.recycle();
+                if (currentActivity() == "com.alibaba.lightapp.runtime.activity.CommonWebViewActivity" || currentActivity() == "com.alibaba.android.dingtalkbase.widgets.dialog.DDProgressDialog") {
+                    try {
+                        var ts = Baidu_OCRs("2.png");
+                        var jie = ""; //建空列表,放结果
+                        var ds = zl(ts[0]["words"]);
+                        if (ds != "") {
+                            for (var i = 0; i < tikus.length; i++) {
+                                var tks = zl(tikus[i].wenti);
+                                var jieguo = tks.indexOf(ds); //问题匹配筛选。
+                                if (jieguo >= 0) {
+                                    //  jie += tikus[i].da;
+                                    jie += tikus[i].daan;
+                                    jie += "\n"
+                                    // break;
+                                }
+                            }
+                          //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
+                            log("答案:" + jie); //匹配字典答案结果。
+                        }
+                    } catch (e) {
+                        //  toastLog("c")
+                    }
+                } else {
+                    toastLog("请在答题界面")
+                    sleep(1000);
+                }
+            }
+            clipls.recycle();
+            xt.recycle();
+            xts.recycle();
+
+        }
+
+    } catch (e) {}
+}
+
+
 //循环答题
 yijianxue.多答 = function() {
     //   setScreenMetrics(1080, 2408); //分辨率设置。

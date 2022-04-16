@@ -21,14 +21,14 @@ var window = floaty.window(
         <button id="app" text="app" w="90" h="40" bg="#77ffffff"/>
         <button id="dt" text="自动答题" w="90" h="40" bg="#77ffffff"/>
         <button id="dgdt" text="单个答题" w="90" h="40" bg="#77ffffff"/>
-       <button id="dgbd" text="单答不点" w="90" h="40" bg="#77ffffff"/>
-    <button id="csd" text="测试点" w="90" h="40" bg="#77ffffff"/>
+        <button id="dgbd" text="单答不点" w="90" h="40" bg="#77ffffff"/>
+        
         <button id="tz" text="停止" w="90" h="40" bg="#77ffffff"/>
     </vertical>
 );
 
 setInterval(() => {}, 1000);
-
+window.setPosition(700,1200);
 var execution = null;
 
 //记录按键被按下时的触摸坐标
@@ -82,7 +82,10 @@ function onClick() {
 window.kzt.click(function() {
     threads.start(function() {
         if (window.kzt.getText() == '控制台开') {
+            
             console.show();
+            console.setSize(device.width, 500);
+
             window.kzt.setText('控制台关');
         } else {
             console.hide();
@@ -101,31 +104,30 @@ window.app.click(function() {
 
 window.dt.click(function() {
     threads.start(function() {
+      //  threads.shutDownAll();
         yijianxue.多答();
-    
+
     })
 })
 
 window.dgdt.click(function() {
     threads.start(function() {
+      //  threads.shutDownAll();
         yijianxue.单答s();
     })
 })
 window.dgbd.click(function() {
     threads.start(function() {
+      //  threads.shutDownAll();
         yijianxue.单答不点();
     })
 })
 
-window.csd.click(function() {
-    threads.start(function() {
-        yijianxue.测试答();
-    })
-})
 
 
 window.tz.click(function() {
     threads.start(function() {
         threads.shutDownAll();
+        toastLog("已停止")
     })
 })
