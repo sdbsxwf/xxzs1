@@ -42,8 +42,14 @@ function qdfh(c, s) {
 yijianxue.启动app = function() {
     //截图立即开始
     threads.start(function() {
-        text("立即开始").findOne().click();
-
+        var qx1 = text("立即开始").findOne(2000);
+        if (qx1) {
+            qx1.click();
+        }
+        var qx2 = text("允许").findOne(2000);
+        if (qx2) {
+            qx2.click();
+        }
     });
     //截图请求
     //请求截图
@@ -87,6 +93,10 @@ yijianxue.本地 = function() {
             //山东卫视。
             bddt[0].child(2).click();
             sleep_sj(3000);
+            var sxcs = className("android.widget.TextView").text("刷新重试").findOne(2000);
+            if (sxcs) {
+                sxcs.click();
+            }
             click("继续播放");
             //播放时长。
             sleep_sj(10000);
@@ -157,7 +167,7 @@ yijianxue.评论分享 = function() {
         fanhui();
         //返回
     }
-};
+}
 
 
 
@@ -185,7 +195,7 @@ yijianxue.文次 = function() {
                 i--
             }
             // 滑动屏幕。
-            var aa = className("android.widget.ListView").find();
+            aa = className("android.widget.ListView").find();
             aa.scrollForward();
             //swipe(1000, 1800, 1100, 100, 600);
             sleep_sj(2000)
@@ -200,6 +210,47 @@ yijianxue.文次 = function() {
 }
 
 //6播放视频。
+yijianxue.视次 = function() {
+    try {
+        toastLog("开始:播放视频")
+        sleep_sj(2000);
+
+        click_logs("百灵");
+        sleep_sj(3000);
+        var sp = className("android.widget.ListView").find();
+        try {
+            sp[1].child(1).child(1).child(0).click();
+            log("1" + sp[1].child(1).child(1).child(1).child(0).text());
+        } catch (e) {
+            sp[2].child(1).child(1).child(0).click();
+            log("2" + sp[2].child(1).child(1).child(1).child(0).text());
+        }
+        var sxcs = className("android.widget.TextView").text("刷新重试").findOne(2000);
+        if (sxcs) {
+            sxcs.click();
+        }
+        for (var i = 1; i < 7; i++) {
+            toastLog("第" + i + "次播放");
+
+            sleep_sj(15000); //播放时长。  
+            swipe(500, 1600, 500, 300, 600); //滑动屏幕。
+            sleep_sj(2000)
+        }
+        back();
+        //sleep_sj(2000)
+        //  sleep_sj(2000)
+        //  back();
+        sleep_sj(2000)
+        //点击学习。
+        className("android.widget.FrameLayout").id("home_bottom_tab_button_work").findOne(6000).click();
+        toastLog("结束:视频播放")
+        sleep_sj(2000)
+    } catch (e) {
+        toastLog("视频播放失败");
+        fanhui() //返回
+    }
+}
+/*
 yijianxue.视次 = function() {
     try {
         toastLog("开始:播放视频")
@@ -233,7 +284,7 @@ yijianxue.视次 = function() {
         fanhui() //返回
     }
 }
-
+*/
 //8打开电台。
 yijianxue.视长 = function() {
     try {
@@ -799,7 +850,7 @@ yijianxue.单答不点 = function() {
                                     // break;
                                 }
                             }
-                          //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
+                            //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
                             log("答案:" + jie); //匹配字典答案结果。
                         }
                     } catch (e) {
