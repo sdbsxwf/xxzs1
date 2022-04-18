@@ -807,29 +807,31 @@ function Baidu_OCRs(imgFile) {
 }
 ////单个答题。
 yijianxue.单答不点 = function() {
-    try {
-        log("开始截图答题……，按音量上键为关闭");
-        while (true) {
 
+    log("开始截图答题……，按音量上键为关闭");
+    while (true) {
+        try {
             var a = 读("c", "zb", "91,660,915,80").split(",");
+            // toastLog(a)
             var img = captureScreen();
             var clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
-            sleep(100);
+            // sleep(100);
             images.save(clipls, "1.png", "png", 50);
-
-            var xts = images.read("1.png");
-            var xt = images.read("2.png");
+            //  sleep(100);
+            var xts = images.read(files.path("./1.png"));
+            var xt = images.read(files.path("./2.png"));
             var p = findImage(xt, xts);
             //    var p = findImage(img, xt, {
             //        region: [Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3])]
             //     })
-
+            //toastLog(p)
             if (p) {
+
                 // log("y")
                 sleep(500);
             } else {
                 //没找到
-                //  log("m")
+                // log("m")
                 //   var clip = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
                 //   sleep(100);
                 images.save(xts, "2.png", "png", 50);
@@ -854,20 +856,33 @@ yijianxue.单答不点 = function() {
                             log("答案:" + jie); //匹配字典答案结果。
                         }
                     } catch (e) {
-                        //  toastLog("c")
+                        sleep(1000);
+                        //     toastLog("c")
                     }
                 } else {
                     toastLog("请在答题界面")
                     sleep(1000);
                 }
             }
-            clipls.recycle();
-            xt.recycle();
-            xts.recycle();
-
+            // if (p != null) {
+            //    p.recycle();
+            // }
+            if (clipls != null) {
+                clipls.recycle();
+            }
+            if (xt != null) {
+                xt.recycle();
+            }
+            if (xts != null) {
+                xts.recycle();
+            }
+        } catch (e) {
+            sleep(1000);
+            //     toastLog("dd")
         }
+    }
 
-    } catch (e) {}
+
 }
 
 

@@ -51,7 +51,7 @@ ui.layout(
     <vertical>
         <appbar>
     
-         <toolbar id="toolbar" title="爱学习_V4.2" />
+         <toolbar id="toolbar" title="爱学习_V4.3" />
     
         </appbar>
         <viewpager id="vv">
@@ -178,6 +178,7 @@ function 读(文件名, 键, 默认值) {
 threads.start(function() {
     ui.run(function() {
         ui.jhms.setText(读("c", "jhm", 0));
+        ui.zb.setText(读("c", "zb", "91,660,915,80"));
     });
 })
 

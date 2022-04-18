@@ -84,6 +84,7 @@ window.kzt.click(function() {
         if (window.kzt.getText() == '控制台开') {
             
             console.show();
+            sleep(200);
             console.setSize(device.width, 500);
 
             window.kzt.setText('控制台关');
