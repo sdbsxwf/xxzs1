@@ -809,17 +809,23 @@ function Baidu_OCRs(imgFile) {
 yijianxue.单答不点 = function() {
 
     log("开始截图答题……，按音量上键为关闭");
+    var clipls="";
+    var xts="";
+    var xt="";
     while (true) {
         try {
             var a = 读("c", "zb", "91,660,915,80").split(",");
             // toastLog(a)
             var img = captureScreen();
-            var clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
+            clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
             // sleep(100);
             images.save(clipls, "1.png", "png", 50);
             //  sleep(100);
-            var xts = images.read(files.path("./1.png"));
-            var xt = images.read(files.path("./2.png"));
+            if (clipls != null) {
+                clipls.recycle();
+            }
+             xts = images.read(files.path("./1.png"));
+             xt = images.read(files.path("./2.png"));
             var p = findImage(xt, xts);
             //    var p = findImage(img, xt, {
             //        region: [Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3])]
@@ -867,9 +873,7 @@ yijianxue.单答不点 = function() {
             // if (p != null) {
             //    p.recycle();
             // }
-            if (clipls != null) {
-                clipls.recycle();
-            }
+            
             if (xt != null) {
                 xt.recycle();
             }
