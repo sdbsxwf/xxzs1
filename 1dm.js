@@ -558,6 +558,7 @@ yijianxue.单答s = function() {
     log(z1 + "," + z2 + "," + z3 + "," + z4);
     sleep(200);
     var d = jietu(Number(z1), Number(z2), device.width - Number(z1) - 80, device.height - Number(z2) - 200);
+
     if (d[0]["words"] == "") {
         d = "失败"
     }
@@ -795,6 +796,14 @@ function Baidu_OCRs(imgFile) {
         //  log(res.body.string());
         ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
         var strs = JSON.parse(res.body.string());
+        //toastLog(typeof strs["error_code"]);
+        if (strs["error_code"] == 17) {
+            toastLog("识别失败了")
+            var ccs = [{
+                "words": "失败"
+            }]
+            return ccs
+        }
         var strss = strs["words_result"]; //[0]["words"];
         // var strss = strs.words_result.map(val => val.words).join('');
         //    log(strs);
@@ -807,30 +816,47 @@ function Baidu_OCRs(imgFile) {
 }
 ////单个答题。
 yijianxue.单答不点 = function() {
-
+    //请求截图
+    // if (!requestScreenCapture()) {
+    //    toast("请求截图失败");
+    //    exit();
+    // }
     log("开始截图答题……，按音量上键为关闭");
-    var clipls="";
-    var xts="";
-    var xt="";
+    var clipls = "";
+    var xtl = "";
+    var xts = "";
+    var xt = "";
     while (true) {
         try {
             var a = 读("c", "zb", "91,660,915,80").split(",");
-            // toastLog(a)
-            var img = captureScreen();
-            clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
+            //    toastLog(a)
+            captureScreen("1l.png");
+            //      sleep(100);
+            //      toastLog("b")
+            xtl = images.read(files.path("./1l.png"));
+            //  sleep(100);
+            //       toastLog("c")
+            // clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
+            clipls = images.clip(xtl, a[0], a[1], a[2], a[3]);
             // sleep(100);
-            images.save(clipls, "1.png", "png", 50);
+            //      toastLog("d")
+            images.save(clipls, "1.png");
+            //     toastLog("e")
+            xtl.recycle();
             //  sleep(100);
             if (clipls != null) {
                 clipls.recycle();
             }
-             xts = images.read(files.path("./1.png"));
-             xt = images.read(files.path("./2.png"));
+            //       toastLog("f")
+            xts = images.read(files.path("./1.png"));
+            xt = images.read(files.path("./2.png"));
+            //    toastLog("ff")
             var p = findImage(xt, xts);
             //    var p = findImage(img, xt, {
             //        region: [Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3])]
             //     })
             //toastLog(p)
+            //     toastLog("g")
             if (p) {
 
                 // log("y")
@@ -840,12 +866,13 @@ yijianxue.单答不点 = function() {
                 // log("m")
                 //   var clip = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
                 //   sleep(100);
-                images.save(xts, "2.png", "png", 50);
+                images.save(xts, "2.png");
                 //      clip.recycle();
                 if (currentActivity() == "com.alibaba.lightapp.runtime.activity.CommonWebViewActivity" || currentActivity() == "com.alibaba.android.dingtalkbase.widgets.dialog.DDProgressDialog") {
                     try {
                         var ts = Baidu_OCRs("2.png");
                         var jie = ""; //建空列表,放结果
+
                         var ds = zl(ts[0]["words"]);
                         if (ds != "") {
                             for (var i = 0; i < tikus.length; i++) {
@@ -859,7 +886,12 @@ yijianxue.单答不点 = function() {
                                 }
                             }
                             //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
-                            log("答案:" + jie); //匹配字典答案结果。
+                            if (jie != "") {
+                                log("答案:" + jie); //匹配字典答案结果。
+                            } else {
+                                toastLog("没找到!!!")
+                            }
+                            sleep(500);
                         }
                     } catch (e) {
                         sleep(1000);
@@ -873,13 +905,13 @@ yijianxue.单答不点 = function() {
             // if (p != null) {
             //    p.recycle();
             // }
-            
-            if (xt != null) {
-                xt.recycle();
-            }
-            if (xts != null) {
-                xts.recycle();
-            }
+
+            //    if (xt != null) {
+            xt.recycle();
+            //   }
+            //    if (xts != null) {
+            xts.recycle();
+            //   }
         } catch (e) {
             sleep(1000);
             //     toastLog("dd")
@@ -895,7 +927,7 @@ yijianxue.多答 = function() {
     //   setScreenMetrics(1080, 2408); //分辨率设置。
     toastLog("答");
     //   sleep(7000);
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 20; i++) {
         //   toastLog(i + "有");
         yijianxue.单答s();
         sleep(2000);
@@ -1244,7 +1276,7 @@ yijianxue.积分 = function() {
 
 //截图
 function jietu(xx, yy, kk, gg) {
-    toastLog("a");
+    //toastLog("a");
     var img = captureScreen();
     //  var src = images.read("1.png");
     var clip = images.clip(img, xx, yy, kk, gg);
@@ -1284,6 +1316,15 @@ function Baidu_OCR(imgFile) {
         //  log(res.body.string());
         ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
         var strs = JSON.parse(res.body.string());
+        //  toastLog(strs);
+        // toastLog(String(strs));
+        if (strs["error_code"] == 17) {
+            toastLog("识别失败了")
+            var ccs = [{
+                "words": "失败"
+            }]
+            return ccs
+        }
         var strss = strs["words_result"]; //[0]["words"];
         // var strss = strs.words_result.map(val => val.words).join('');
         log(strs);
