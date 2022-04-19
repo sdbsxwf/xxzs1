@@ -51,7 +51,7 @@ ui.layout(
     <vertical>
         <appbar>
     
-         <toolbar id="toolbar" title="爱学习_V4.3" />
+         <toolbar id="toolbar" title="爱学习_V4.419" />
     
         </appbar>
         <viewpager id="vv">
