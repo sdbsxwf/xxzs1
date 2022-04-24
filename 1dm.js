@@ -575,7 +575,7 @@ yijianxue.单答s = function() {
         }
     }
     try {
-        log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
+        log("●" + jie.substr(0, 100)); //匹配字典答案结果。
     } catch (e) {}
     if (jie == "") {
         jie = "没找到答案";
@@ -887,7 +887,7 @@ yijianxue.单答不点 = function() {
                             }
                             //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
                             if (jie != "") {
-                                log("答案:" + jie); //匹配字典答案结果。
+                                log("●" + jie); //匹配字典答案结果。
                             } else {
                                 toastLog("没找到!!!")
                             }
