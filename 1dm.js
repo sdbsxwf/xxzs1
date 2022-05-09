@@ -91,6 +91,7 @@ yijianxue.本地 = function() {
             sleep_sj(3000);
             var bddt = className("android.support.v7.widget.RecyclerView").find();
             //山东卫视。
+            toastLog(bddt[0].child(2));
             bddt[0].child(2).click();
             sleep_sj(3000);
             var sxcs = className("android.widget.TextView").text("刷新重试").findOne(2000);
@@ -110,6 +111,7 @@ yijianxue.本地 = function() {
         }
     } catch (e) {
         toastLog("本地播放失败");
+        sfs[3].child(0).click();
         fanhui(); //返回
     }
 
