@@ -89,10 +89,13 @@ yijianxue.本地 = function() {
             //点击山东
             sfs[3].child(3).click();
             sleep_sj(3000);
-            var bddt = className("android.support.v7.widget.RecyclerView").find();
+            //var bddt = className("android.support.v7.widget.RecyclerView").find();
+            var bddt = depth(25).className("androidx.recyclerview.widget.RecyclerView").findOne(5000);
             //山东卫视。
-            toastLog(bddt[0].child(2));
-            bddt[0].child(2).click();
+            if (bddt) {
+                bddt.child(2).click();
+                // bddt[0].child(2).click();
+            }
             sleep_sj(3000);
             var sxcs = className("android.widget.TextView").text("刷新重试").findOne(2000);
             if (sxcs) {
