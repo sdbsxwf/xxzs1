@@ -16,6 +16,7 @@ threads.start(function() {
 
 var window = floaty.window(
     <vertical>
+        <button id="tzd" text="挑战答" w="90" h="40" bg="#77ffffff"/>
         <button id="action" text="移动" w="90" h="40" bg="#77ffffff"/>
         <button id="kzt" text="控制台开" w="90" h="40" bg="#77ffffff"/>
         <button id="app" text="app" w="90" h="40" bg="#77ffffff"/>
@@ -28,7 +29,7 @@ var window = floaty.window(
 );
 
 setInterval(() => {}, 1000);
-window.setPosition(700,1200);
+window.setPosition(700, 1200);
 var execution = null;
 
 //记录按键被按下时的触摸坐标
@@ -82,7 +83,7 @@ function onClick() {
 window.kzt.click(function() {
     threads.start(function() {
         if (window.kzt.getText() == '控制台开') {
-            
+
             console.show();
             sleep(200);
             console.setSize(device.width, 500);
@@ -105,7 +106,7 @@ window.app.click(function() {
 
 window.dt.click(function() {
     threads.start(function() {
-      //  threads.shutDownAll();
+        //  threads.shutDownAll();
         yijianxue.多答();
 
     })
@@ -113,18 +114,23 @@ window.dt.click(function() {
 
 window.dgdt.click(function() {
     threads.start(function() {
-      //  threads.shutDownAll();
+        //  threads.shutDownAll();
         yijianxue.单答s();
     })
 })
 window.dgbd.click(function() {
     threads.start(function() {
-      //  threads.shutDownAll();
+        //  threads.shutDownAll();
         yijianxue.单答不点();
     })
 })
 
-
+window.tzd.click(function() {
+    threads.start(function() {
+        //  threads.shutDownAll();
+        yijianxue.挑单答();
+    })
+})
 
 window.tz.click(function() {
     threads.start(function() {
