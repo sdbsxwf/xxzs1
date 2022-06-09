@@ -51,7 +51,7 @@ ui.layout(
     <vertical>
         <appbar>
     
-         <toolbar id="toolbar" title="爱学习_V4.419" />
+         <toolbar id="toolbar" title="爱学习_V4.604" />
     
         </appbar>
         <viewpager id="vv">
@@ -78,6 +78,7 @@ ui.layout(
                         
                         <input id="zb" hint="1080*2408:坐标91,660,915,80" text="91,660,915,80" textSize="14sp" />
                     </horizontal>
+                    <text text="坐标:x,y,w,min_h,max_h" padding="22 8 0 8" />
                     <HorizontalScrollView>
                         <horizontal padding="22 8 0 8">
                             <pref-checkbox id="perf0" text="挑战" />
@@ -178,7 +179,7 @@ function 读(文件名, 键, 默认值) {
 threads.start(function() {
     ui.run(function() {
         ui.jhms.setText(读("c", "jhm", 0));
-        ui.zb.setText(读("c", "zb", "91,660,915,80"));
+        ui.zb.setText(读("c", "zb", "91,660,915,80,1580"));
     });
 })
 

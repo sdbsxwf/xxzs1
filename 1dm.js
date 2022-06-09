@@ -1,5 +1,4 @@
 //
-
 var yitiku = files.path("./tk题库.txt");
 //0读取题库。
 try {
@@ -255,41 +254,7 @@ yijianxue.视次 = function() {
         fanhui() //返回
     }
 }
-/*
-yijianxue.视次 = function() {
-    try {
-        toastLog("开始:播放视频")
-        sleep_sj(2000);
-        for (var i = 1; i < 7; i++) {
-            toastLog("第" + i + "次播放");
-            click_logs("百灵");
-            sleep_sj(3000);
-            var sp = className("android.widget.ListView").find();
-            try {
-                sp[1].child(1).child(1).child(0).click();
-                log("1" + sp[1].child(1).child(1).child(1).child(0).text());
-            } catch (e) {
-                sp[2].child(1).child(1).child(0).click();
-                log("2" + sp[2].child(1).child(1).child(1).child(0).text());
-            }
-            sleep_sj(15000); //播放时长。  
-            back();
-            sleep_sj(2000)
-            //   swipe(500, 1600, 500, 300, 600); //滑动屏幕。
-        }
-        //  sleep_sj(2000)
-        //  back();
-        sleep_sj(2000)
-        //点击学习。
-        className("android.widget.FrameLayout").id("home_bottom_tab_button_work").findOne(6000).click();
-        toastLog("结束:视频播放")
-        sleep_sj(2000)
-    } catch (e) {
-        toastLog("视频播放失败");
-        fanhui() //返回
-    }
-}
-*/
+
 //8打开电台。
 yijianxue.视长 = function() {
     try {
@@ -394,7 +359,7 @@ yijianxue.挑单答 = function() {
             xh++;
         }
         while (!tis);
-        var tm = zls(tis.slice(0, 10));
+        var tm = zls(tis.slice(0, 20));
         log("②题目:" + tm);
         //匹配
         var jie = []; //建空列表,放结果
@@ -494,60 +459,7 @@ yijianxue.挑战 = function() {
 
 }
 
-////单个答题。
-yijianxue.单答 = function() {
-    try {
-        log("已点答题按键");
-        var kk = depth(29).className("android.view.View").findOne(30000);
-        sleep(100);
-        // toastLog(kk.bounds().left+" "+kk.bounds().top+" "+kk.bounds().width()+" "+ kk.bounds().height())     
-        // var t = jietu(91, 660, 915, 80);
-        var a = 读("c", "zb", "91,660,915,80").split(",");
-        var t = jietu(Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
-        if (t == "") {
-            t = "失败"
-        }
-        log(t);
-        var jie = ""; //建空列表,放结果
 
-        for (var i = 0; i < tikus.length; i++) {
-            var tks = zl(tikus[i].wenti);
-            var jieguo = tks.indexOf(t); //问题匹配筛选。
-            if (jieguo >= 0) {
-                jie += tikus[i].da;
-                jie += tikus[i].daan;
-                jie += "\n"
-                // break;
-            }
-        }
-        try {
-            log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
-        } catch (e) {}
-        var ti = depth(29).className("android.widget.ListView").findOne(5000).children();
-
-        var sy = "ABCDE";
-        if (jie != "") {
-            var jies = jie.charAt(0);
-            var jj = Number(sy.indexOf(jies));
-
-            if (jj != -1) {
-                toastLog("选择:" + sy.charAt(jj));
-                click(ti[jj].bounds().centerX(), ti[jj].bounds().centerY());
-                sleep(100);
-                click(ti[jj].bounds().centerX(), ti[jj].bounds().centerY());
-
-            } else {
-                toastLog("随便点一个")
-                click(ti[0].bounds().centerX(), ti[0].bounds().centerY())
-            }
-
-        } else {
-            toastLog("随便点一个")
-            click(ti[0].bounds().centerX(), ti[0].bounds().centerY())
-        }
-
-    } catch (e) {}
-}
 
 ////单个答题2。
 //childCount
@@ -555,17 +467,23 @@ yijianxue.单答s = function() {
     // try {
     log("已点答题按键");
     var ti = depth(29).className("android.widget.ListView").findOne(25000);
-    var z = ti.parent().bounds()
-    var z1 = z.left
-    var z2 = z.top
-    var z3 = z.right
-    var z4 = z.bottom
-    log(z1 + "," + z2 + "," + z3 + "," + z4);
+    //  var z = ti.parent().bounds()
+    // var z1 = z.left
+    // var z2 = z.top
+    //  var z3 = z.right
+    //  var z4 = z.bottom
+    var z = 读("c", "zb", "91,660,915,80,1580").split(",");
+    //  log("宽"+device.width+"高"+device.height)
+    //  var zs3=device.width - Number(z1) - 80
+    // var zs4=device.height - Number(z2) - 200
+    log(z[0] + "," + z[1] + "," + z[2] + "," + (Number(z[4])));
     sleep(200);
-    var d = jietu(Number(z1), Number(z2), device.width - Number(z1) - 80, device.height - Number(z2) - 200);
-
+    var d = jietu(Number(z[0]), Number(z[1]), Number(z[2]), (Number(z[4])));
+    log(d);
     if (d[0]["words"] == "") {
         d = "失败"
+    } else {
+        log(d[0]["words"])
     }
     var jie = ""; //建空列表,放结果
     for (var i = 0; i < tikus.length; i++) {
@@ -580,7 +498,7 @@ yijianxue.单答s = function() {
         }
     }
     try {
-        log("●" + jie.substr(0, 100)); //匹配字典答案结果。
+        toastLog("●" + jie.substr(0, 100)); //匹配字典答案结果。
     } catch (e) {}
     if (jie == "") {
         jie = "没找到答案";
@@ -591,16 +509,12 @@ yijianxue.单答s = function() {
     for (var k = 1; k < d.length; k++) {
         var x0 = d[k]["words"];
         var xs0 = zls(x0)
-        if (xs0 != "") {
+        if (xs0 != "无" || xs0 != "") {
             var xs1 = xs0.slice(0, 5)
             var j1 = Number(x0.indexOf("A."));
             if (j1 != -1) {
-                // toastLog("选择:A");
-                //   var xs0 = zl(x0)
-                //   var xs1 = xs0.slice(0, 5)
-                // toastLog(xs1)
                 if (jies.indexOf(xs1) != -1) {
-                    toastLog("点A" + xs1)
+                  //  toastLog("点A" + xs1)
                     click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
                     sleep(100);
                     click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
@@ -611,12 +525,8 @@ yijianxue.单答s = function() {
 
             var j1 = Number(x0.indexOf("B."));
             if (j1 != -1) {
-                //  toastLog("选择:B");
-                //    var xs0 = zl(x0)
-                //    var xs1 = xs0.slice(0, 5)
-
                 if (jies.indexOf(xs1) != -1) {
-                    toastLog("点B" + xs1)
+                  //  toastLog("点B" + xs1)
                     click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
                     sleep(100);
                     click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
@@ -627,12 +537,8 @@ yijianxue.单答s = function() {
 
             var j1 = Number(x0.indexOf("C."));
             if (j1 != -1) {
-                //   toastLog("选择:C");
-                //  var xs0 = zl(x0)
-                //   var xs1 = xs0.slice(0, 5)
-
                 if (jies.indexOf(xs1) != -1) {
-                    toastLog("点C" + xs1)
+                  //  toastLog("点C" + xs1)
                     click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
                     sleep(100);
                     click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
@@ -642,12 +548,8 @@ yijianxue.单答s = function() {
             }
             var j1 = Number(x0.indexOf("D."));
             if (j1 != -1) {
-                //  toastLog("选择:D");
-                //    var xs0 = zl(x0)
-                //   var xs1 = xs0.slice(0, 5)
-
                 if (jies.indexOf(xs1) != -1) {
-                    toastLog("点D" + xs1)
+                   // toastLog("点D" + xs1)
                     click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
                     sleep(100);
                     click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
@@ -667,265 +569,97 @@ yijianxue.单答s = function() {
     //  }
 }
 
-/*
-//但他不点截图用
-function jietus(xx, yy, kk, gg) {
-    //  toastLog("a");
-    var img = captureScreen();
-    //  var src = images.read("1.png");
-    var clip = images.clip(img, xx, yy, kk, gg);
-    //二值化
-    var aa = images.threshold(clip, 100, 255, "BINARY")
-    images.save(aa, "2.png", "png", 50);
-    var imgPath = files.path("./2.png");
-    let Sizes = (new java.io.File(imgPath)).length(); //取得文件大小-kb
-    // toastLog("dd" + Sizes)
-    clip.recycle();
-    aa.recycle();
-    return Sizes
-}
+
+
+
+
+
 //截图用图片转文字
-function Baidu_OCRs(imgFile) {
-    try {
-        access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
-        url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
-        var img = images.read(imgFile);
-        var imag64 = images.toBase64(img, "png", 100);
-        res = http.post(url, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            image: imag64,
-            image_type: "BASE64",
-            language_type: "CHN_ENG"
-        });
-        //  log(res.body.string());
-        ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
-        var strs = JSON.parse(res.body.string());
-        var strss = strs["words_result"]; //[0]["words"];
-        // var strss = strs.words_result.map(val => val.words).join('');
-        //    log(strs);
-        img.recycle();
-        //  imag64.recycle();
-        return strss;
-    } catch (e) {
-        return "识别文字失败"
+yijianxue.ocrs = function(imgFile) {
+
+    //   var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
+    var ak = "xdarK0D4R0GGjr04efEv5Lzw";
+    var sk = "MzBuIG2K5P7WoUUk1xmGwP8LMiKY5veD";
+    //通过sk和sk,获得token;
+    var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=" + ak + "&client_secret=" + sk).body.json().access_token;
+    url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
+    var img = images.read(imgFile);
+    var imag64 = images.toBase64(img, "png", 100);
+    res = http.post(url, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        image: imag64,
+        image_type: "BASE64",
+        language_type: "CHN_ENG"
+    });
+    //  log(res.body.string());
+    ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
+    var strs = JSON.parse(res.body.string());
+    //toastLog(typeof strs["error_code"]);
+    if (strs["error_code"] == 17) {
+        toastLog("识别失败了")
+        var ccs = [{
+            "words": "失败"
+        }]
+        return ccs
     }
+    var strss = strs["words_result"]; //[0]["words"];
+    // var strss = strs.words_result.map(val => val.words).join('');
+    //    log(strs);
+    img.recycle();
+    //  imag64.recycle();
+    return strss;
+
 }
+
 ////单个答题。
-yijianxue.单答不点 = function() {
-    try {
-        log("截图答题，按音量上键为关闭");
-        //    var kk = depth(29).className("android.view.View").findOne(30000);
-        //   sleep(100);
-        // toastLog(kk.bounds().left+" "+kk.bounds().top+" "+kk.bounds().width()+" "+ kk.bounds().height())     
-        // var t = jietu(91, 660, 915, 80);
-        var dx ="";
-        var t="";
-        var a = 读("c", "zb", "91,660,915,80").split(",");
-        while (true) {
-            do {
-
-                t = jietus(Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
-                sleep(500);
-            } while (dx == t)
-
-            //    toastLog(t);
-            dx = t;
-            if (t > 1000) {
-              //  toastLog(currentActivity())
-                if (currentActivity() =="com.alibaba.lightapp.runtime.activity.CommonWebViewActivity" || currentActivity() == "com.alibaba.android.dingtalkbase.widgets.dialog.DDProgressDialog") {
-                    try {
-                        var ts = Baidu_OCRs("2.png");
-                        var jie = ""; //建空列表,放结果
-                        var ds = zl(ts[0]["words"]);
-                        if (ds != "") {
-                            for (var i = 0; i < tikus.length; i++) {
-                                var tks = zl(tikus[i].wenti);
-                                var jieguo = tks.indexOf(ds); //问题匹配筛选。
-                                if (jieguo >= 0) {
-                                    //  jie += tikus[i].da;
-                                    jie += tikus[i].daan;
-                                    jie += "\n"
-                                    // break;
-                                }
-                            }
-                            log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
-                        }
-                    } catch (e) {
-                        //  toastLog("c")
-                    }
-                }else{
-                    toastLog("请在答题界面")
-                    sleep(1000);
-                }
-            }
-        }
-    } catch (e) {}
-}
-
-
-*/
-
-//但他不点截图用
-function jietus(xx, yy, kk, gg) {
-    //  toastLog("a");
-    var img = captureScreen();
-    //  var src = images.read("1.png");
-    var clip = images.clip(img, xx, yy, kk, gg);
-    //二值化
-    var aa = images.threshold(clip, 100, 255, "BINARY")
-    images.save(aa, "2.png", "png", 50);
-    var imgPath = files.path("./2.png");
-    let Sizes = (new java.io.File(imgPath)).length(); //取得文件大小-kb
-    // toastLog("dd" + Sizes)
-    clip.recycle();
-    aa.recycle();
-    return Sizes
-}
-//截图用图片转文字
-function Baidu_OCRs(imgFile) {
-    try {
-        access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
-        url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
-        var img = images.read(imgFile);
-        var imag64 = images.toBase64(img, "png", 100);
-        res = http.post(url, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            image: imag64,
-            image_type: "BASE64",
-            language_type: "CHN_ENG"
-        });
-        //  log(res.body.string());
-        ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
-        var strs = JSON.parse(res.body.string());
-        //toastLog(typeof strs["error_code"]);
-        if (strs["error_code"] == 17) {
-            toastLog("识别失败了")
-            var ccs = [{
-                "words": "失败"
-            }]
-            return ccs
-        }
-        var strss = strs["words_result"]; //[0]["words"];
-        // var strss = strs.words_result.map(val => val.words).join('');
-        //    log(strs);
-        img.recycle();
-        //  imag64.recycle();
-        return strss;
-    } catch (e) {
-        return "识别文字失败"
-    }
-}
-////单个答题。
-yijianxue.单答不点 = function() {
+yijianxue.单答不点2 = function() {
+    //  try {
     //请求截图
-    // if (!requestScreenCapture()) {
-    //    toast("请求截图失败");
+    //     if (!requestScreenCapture()) {
+    //       toast("请求截图失败");
     //    exit();
-    // }
+    //     }
     log("开始截图答题……，按音量上键为关闭");
-    var clipls = "";
-    var xtl = "";
-    var xts = "";
-    var xt = "";
-    while (true) {
-        try {
-            var a = 读("c", "zb", "91,660,915,80").split(",");
-            //    toastLog(a)
-            captureScreen("1l.png");
-            //      sleep(100);
-            //      toastLog("b")
-            xtl = images.read(files.path("./1l.png"));
-            //  sleep(100);
-            //       toastLog("c")
-            // clipls = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
-            clipls = images.clip(xtl, a[0], a[1], a[2], a[3]);
-            // sleep(100);
-            //      toastLog("d")
-            images.save(clipls, "1.png");
-            //     toastLog("e")
-            xtl.recycle();
-            //  sleep(100);
-            if (clipls != null) {
-                clipls.recycle();
+    //  } catch (e) {}
+
+    var a = 读("c", "zb", "91,660,915,80,1580").split(",");
+    var xtl = captureScreen();
+    var clipls = images.clip(xtl, a[0], a[1], a[2], a[3]);
+    images.save(clipls, "1.png");
+    clipls.recycle();
+    var ts = yijianxue.ocrs("1.png");
+    //    toastLog(ts);
+    var jie = ""; //建空列表,放结果
+
+    var ds = zl(ts[0]["words"]);
+    //  toastLog(ds)
+    if (ds != "") {
+        for (var i = 0; i < tikus.length; i++) {
+            var tks = zl(tikus[i].wenti);
+            var jieguo = tks.indexOf(ds); //问题匹配筛选。
+            if (jieguo >= 0) {
+                //  jie += tikus[i].da;
+                jie += tikus[i].daan;
+                jie += "\n"
+                // break;
             }
-            //       toastLog("f")
-            xts = images.read(files.path("./1.png"));
-            xt = images.read(files.path("./2.png"));
-            //    toastLog("ff")
-            var p = findImage(xt, xts);
-            //    var p = findImage(img, xt, {
-            //        region: [Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3])]
-            //     })
-            //toastLog(p)
-            //     toastLog("g")
-            if (p) {
-
-                // log("y")
-                sleep(500);
-            } else {
-                //没找到
-                // log("m")
-                //   var clip = images.clip(img, Number(a[0]), Number(a[1]), Number(a[2]), Number(a[3]));
-                //   sleep(100);
-                images.save(xts, "2.png");
-                //      clip.recycle();
-                if (currentActivity() == "com.alibaba.lightapp.runtime.activity.CommonWebViewActivity" || currentActivity() == "com.alibaba.android.dingtalkbase.widgets.dialog.DDProgressDialog") {
-                    try {
-                        var ts = Baidu_OCRs("2.png");
-                        var jie = ""; //建空列表,放结果
-
-                        var ds = zl(ts[0]["words"]);
-                        if (ds != "") {
-                            for (var i = 0; i < tikus.length; i++) {
-                                var tks = zl(tikus[i].wenti);
-                                var jieguo = tks.indexOf(ds); //问题匹配筛选。
-                                if (jieguo >= 0) {
-                                    //  jie += tikus[i].da;
-                                    jie += tikus[i].daan;
-                                    jie += "\n"
-                                    // break;
-                                }
-                            }
-                            //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
-                            if (jie != "") {
-                                log("●" + jie); //匹配字典答案结果。
-                            } else {
-                                toastLog("没找到!!!")
-                            }
-                            sleep(500);
-                        }
-                    } catch (e) {
-                        sleep(1000);
-                        //     toastLog("c")
-                    }
-                } else {
-                    toastLog("请在答题界面")
-                    sleep(1000);
-                }
-            }
-            // if (p != null) {
-            //    p.recycle();
-            // }
-
-            //    if (xt != null) {
-            xt.recycle();
-            //   }
-            //    if (xts != null) {
-            xts.recycle();
-            //   }
-        } catch (e) {
-            sleep(1000);
-            //     toastLog("dd")
+        }
+        //  log("答案:" + jie.substr(0, 100)); //匹配字典答案结果。
+        if (jie != "") {
+            toastLog("●" + jie); //匹配字典答案结果。
+        } else {
+            toastLog("没找到!!!")
         }
     }
+    //   xtl.recycle();
+    //  xts.recycle();
+
+
 
 
 }
-
 
 //循环答题
 yijianxue.多答 = function() {
@@ -1001,17 +735,17 @@ yijianxue.每日 = function() {
             datiyemian(2);
             sleep_sj(2000);
             for (var i = 0; i < 5; i++) {
-                sleep_sj(2000)
+                sleep_sj(1000)
                 if (text("多选题").exists() || text("单选题").exists()) {
                     toastLog(i + ">>选择题")
-                    xuanxiang();
+                    yijianxue.xuanxiang();
                     sleep_sj(1000);
                     continue; //跳出单次循环。
                 }
-                sleep_sj(2000)
+               // sleep_sj(2000)
                 if (text("填空题").exists()) {
                     toastLog(i + ">>填空题")
-                    tkt();
+                    yijianxue.tkt();
                     sleep_sj(1000);
                     continue; //跳出单次循环。
                 }
@@ -1036,20 +770,20 @@ yijianxue.每日 = function() {
 }
 //1每日答题-选择题查看提示。
 function tishis() {
-    sleep_sj(2000)
+    sleep_sj(100)
     click_logs("查看提示")
-    sleep_sj(2000)
+    sleep_sj(100)
     if (text("提示").exists()) {
         var aa = className("android.view.View").text("提示").findOne(6000).parent().parent().child(1).child(0);
         var bb = aa.text()
         log("①提示:" + bb)
     }
-    sleep_sj(1000)
+    sleep_sj(100)
     back();
     return bb
 }
 //2每日答题-选择题点击。
-function xuanxiang() {
+yijianxue.xuanxiang=function() {
     sleep_sj(2000)
     var tishitis = tishis() //查看提示。
     var xx = ["A.", "B.", "C.", "D.", "E."]
@@ -1091,21 +825,21 @@ function xuanxiang() {
 }
 //3每日答题-填空题答案查看提示
 function tishi() {
-    sleep_sj(2000)
+    sleep_sj(100)
     click_logs("查看提示")
     //  sleep_sj(2000)
     if (!text("请观看视频").exists()) {
-        sleep_sj(2000)
+        sleep_sj(100)
         if (text("提示").exists()) {
             var aa = className("android.view.View").text("提示").findOne(6000).parent().parent().child(1).child(0);
             var ts_list = aa.text()
             log("①提示:" + ts_list)
         }
         var ts_lists = ts_list.replace(/[^\u4e00-\u9fa5]/g, ""); //
-        sleep_sj(1000)
+        sleep_sj(100)
         back();
     } else {
-        sleep_sj(1000)
+        sleep_sj(100)
         var ts_lists = "屁"
         back();
 
@@ -1113,7 +847,7 @@ function tishi() {
     return ts_lists
 }
 //4每日答题-填空题点击。
-function tkt() {
+yijianxue.tkt=function() {
     sleep_sj(2000)
     var tishiti = tishi() //查看提示。
     if (text("填空题").exists()) {
@@ -1296,57 +1030,29 @@ function jietu(xx, yy, kk, gg) {
     //  return;
 
     // toastLog(t);
-    var t = Baidu_OCR("2.png");
+    var t = yijianxue.ocrs("2.png");
     // 回收图片
     // img.recycle();
 
     // var aa = zl(t)
     return t
 }
-//图片转文字
-function Baidu_OCR(imgFile) {
-    try {
-        access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
-        url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
-        var img = images.read(imgFile);
-        var imag64 = images.toBase64(img, "png", 100);
-        res = http.post(url, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            image: imag64,
-            image_type: "BASE64",
-            language_type: "CHN_ENG"
-        });
-        //  log(res.body.string());
-        ///   str = JSON.parse(res.body.string()).words_result.map(val => val.words).join('\n');
-        var strs = JSON.parse(res.body.string());
-        //  toastLog(strs);
-        // toastLog(String(strs));
-        if (strs["error_code"] == 17) {
-            toastLog("识别失败了")
-            var ccs = [{
-                "words": "失败"
-            }]
-            return ccs
-        }
-        var strss = strs["words_result"]; //[0]["words"];
-        // var strss = strs.words_result.map(val => val.words).join('');
-        log(strs);
-        img.recycle();
-        //  imag64.recycle();
-        return strss;
-    } catch (e) {
-        return "识别文字失败"
-    }
-}
+
 //字典只保留汉字。
 function zl(ti) {
-    return ti.replace(/[^\u4e00-\u9fa5]/g, ""); //字典只保留汉字。
+    try {
+        return ti.replace(/[^\u4e00-\u9fa5]/g, ""); //字典只保留汉字。
+    } catch (e) {
+        return "无"
+    }
 }
 //字典只保留汉字和数字。
 function zls(ti) {
-    return ti.replace(/[^0-9^\u4e00-\u9fa5]/g, ""); //字典只保留汉字。
+    try {
+        return ti.replace(/[^0-9^\u4e00-\u9fa5]/g, ""); //字典只保留汉字。
+    } catch (e) {
+        return "无"
+    }
 }
 
 function 写(文件名, 键, 值) {

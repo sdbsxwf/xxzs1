@@ -1,30 +1,17 @@
 var yijianxue = require('1dm.js');
 
-//截图立即开始
-threads.start(function() {
-    text("立即开始").findOne().click();
-
-});
-//截图请求
-//请求截图
-threads.start(function() {
-    if (!requestScreenCapture()) {
-        toast("请求截图失败");
-        // exit();
-    }
-});
+var xlk = "APP|挑战|自双争|单双争|双争不点|每日|退出";
 
 var window = floaty.window(
     <vertical>
-        <button id="tzd" text="挑战答" w="90" h="40" bg="#77ffffff"/>
-        <button id="action" text="移动" w="90" h="40" bg="#77ffffff"/>
-        <button id="kzt" text="控制台开" w="90" h="40" bg="#77ffffff"/>
-        <button id="app" text="app" w="90" h="40" bg="#77ffffff"/>
-        <button id="dt" text="自动答题" w="90" h="40" bg="#77ffffff"/>
-        <button id="dgdt" text="单个答题" w="90" h="40" bg="#77ffffff"/>
-        <button id="dgbd" text="单答不点" w="90" h="40" bg="#77ffffff"/>
         
-        <button id="tz" text="停止" w="90" h="40" bg="#77ffffff"/>
+        
+        <horizontal>
+            <button id="action" text="start" w="50" h="40" bg="#77ffffff"/>
+            <spinner id="sp1" entries="{{xlk}}" w="100" textColor="red" bg="#eeffeeee"/>
+            {/*  <button id="kzt" text="控制台开" w="90" h="40" bg="#77ffffff"/>*/}
+        </horizontal>
+        
     </vertical>
 );
 
@@ -54,7 +41,7 @@ window.action.setOnTouchListener(function(view, event) {
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
             //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if (new Date().getTime() - downTime > 1500) {
+            if (new Date().getTime() - downTime > 3000) {
                 exit();
             }
             return true;
@@ -69,17 +56,84 @@ window.action.setOnTouchListener(function(view, event) {
 });
 
 function onClick() {
-    if (window.action.getText() == '移动') {
+    if (window.action.getText() == 'start') {
         //  execution = engines.execScriptFile(path);
-        window.action.setText('停止运行');
+        window.action.setText('stop');
+        var i = window.sp1.getSelectedItemPosition();
+        //  toastLog(i);
+        switch (i) {
+            case 0:
+                // code
+                threads.start(function() {
+                    toastLog("启动学习强国");
+                    launchApp("学习强国");
+                })
+                break;
+
+            case 1:
+                // code
+                threads.start(function() {
+                    for (var i = 0; i < 5; i++) {
+                        yijianxue.挑单答();
+                        sleep(2000);
+                    }
+
+                })
+                break;
+            case 2:
+                // code
+                threads.start(function() {
+                    yijianxue.多答();
+
+                })
+                break;
+            case 3:
+                // code
+                threads.start(function() {
+                    yijianxue.单答s();
+                })
+                break;
+            case 4:
+                // code
+                threads.start(function() {
+                    yijianxue.单答不点2();
+                })
+                break;
+            case 5:
+                // code
+                threads.start(function() {
+                    for (var i = 0; i < 5; i++) {
+                        if (text("多选题").exists() || text("单选题").exists()) {
+                            toastLog(">>选择题")
+                            yijianxue.xuanxiang();
+                        } else {
+                            toastLog(">>填空题")
+                            yijianxue.tkt();
+                        }
+                        sleep(2000);
+                    }
+
+                })
+                break;
+            case 6:
+                // code
+                //   threads.start(function() {
+                engines.stopAllAndToast();
+                //   })
+                break;
+            default:
+                // code
+                toastLog("无");
+        }
     } else {
-        //  if (execution) {
-        //       execution.getEngine().forceStop();
+        // if (execution) {
+        //     execution.getEngine().forceStop();
         //   }
         threads.shutDownAll();
-        window.action.setText('移动');
+        window.action.setText('start');
     }
 }
+/*
 window.kzt.click(function() {
     threads.start(function() {
         if (window.kzt.getText() == '控制台开') {
@@ -96,45 +150,18 @@ window.kzt.click(function() {
 
     })
 })
-
-window.app.click(function() {
-    threads.start(function() {
-        launchApp("学习强国");
-    })
-})
-
-
-window.dt.click(function() {
-    threads.start(function() {
-        //  threads.shutDownAll();
-        yijianxue.多答();
-
-    })
-})
-
-window.dgdt.click(function() {
-    threads.start(function() {
-        //  threads.shutDownAll();
-        yijianxue.单答s();
-    })
-})
-window.dgbd.click(function() {
-    threads.start(function() {
-        //  threads.shutDownAll();
-        yijianxue.单答不点();
-    })
-})
-
-window.tzd.click(function() {
-    threads.start(function() {
-        //  threads.shutDownAll();
-        yijianxue.挑单答();
-    })
-})
-
-window.tz.click(function() {
-    threads.start(function() {
-        threads.shutDownAll();
-        toastLog("已停止")
-    })
-})
+*/
+//截图请求
+//请求截图
+threads.start(function() {
+    try {
+        if (!requestScreenCapture()) {
+            toast("请求截图失败");
+            // exit();
+        } else {
+            toastLog("已获取")
+        }
+    } catch (e) {
+        log("已获取!")
+    }
+});
