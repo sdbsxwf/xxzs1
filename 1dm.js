@@ -577,11 +577,11 @@ yijianxue.单答s = function() {
 //截图用图片转文字
 yijianxue.ocrs = function(imgFile) {
 
-    //   var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
-    var ak = "xdarK0D4R0GGjr04efEv5Lzw";
-    var sk = "MzBuIG2K5P7WoUUk1xmGwP8LMiKY5veD";
+    var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
+    //var ak = "xdarK0D4R0GGjr04efEv5Lzw";
+   // var sk = "MzBuIG2K5P7WoUUk1xmGwP8LMiKY5veD";
     //通过sk和sk,获得token;
-    var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=" + ak + "&client_secret=" + sk).body.json().access_token;
+    //var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=" + ak + "&client_secret=" + sk).body.json().access_token;
     url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
     var img = images.read(imgFile);
     var imag64 = images.toBase64(img, "png", 100);
