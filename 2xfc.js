@@ -4,7 +4,11 @@ var xlk = "APP|挑战|自双争|单双争|双争不点|每日|退出";
 
 var window = floaty.window(
     <vertical>
-        
+        <radiogroup  orientation="horizontal" >
+            <radio id="cd1" text="挑"  />
+            <radio id="cd2" text="争"  />
+            <radio id="cd3" text="每"  />
+        </radiogroup>
         
         <horizontal>
             <button id="action" text="start" w="50" h="40" bg="#77ffffff"/>
@@ -16,7 +20,7 @@ var window = floaty.window(
 );
 
 setInterval(() => {}, 1000);
-window.setPosition(700, 1200);
+window.setPosition(300, 200);
 var execution = null;
 
 //记录按键被按下时的触摸坐标
@@ -133,6 +137,23 @@ function onClick() {
         window.action.setText('start');
     }
 }
+window.cd1.on("check", (checked) => {
+    if (checked) {
+        window.sp1.setSelection(1);
+    }
+});
+
+window.cd2.on("check", (checked) => {
+    if (checked) {
+        window.sp1.setSelection(2);
+    }
+});
+
+window.cd3.on("check", (checked) => {
+    if (checked) {
+        window.sp1.setSelection(5);
+    }
+});
 /*
 window.kzt.click(function() {
     threads.start(function() {
