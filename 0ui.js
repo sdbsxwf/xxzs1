@@ -50,9 +50,9 @@ var PrefCheckBox = (function() {
 ui.layout(
     <vertical>
         <appbar>
-    
-         <toolbar id="toolbar" title="爱学习_V4.604" />
-    
+            
+            <toolbar id="toolbar" title="爱学习_V4.630" />
+            
         </appbar>
         <viewpager id="vv">
             <ScrollView>
@@ -123,6 +123,7 @@ ui.emitter.on("create_options_menu", menu => {
     menu.add("设置");
     menu.add("日志");
     menu.add("更新");
+    menu.add("坐标");
     menu.add("退出");
 });
 
@@ -145,6 +146,11 @@ ui.emitter.on("options_item_selected", (e, item) => {
             threads.start(function() {
                 gx(); //更新代码主函数
             });
+            break;
+        case "坐标":
+            if (files.exists("8zb.js")) {
+                engines.execScriptFile("8zb.js");
+            }
             break;
         case "退出":
             engines.stopAllAndToast();
@@ -375,7 +381,7 @@ threads.start(function() {
         //toastLog(hrlss)
         if (hrlss.indexOf("爱学习_V4.1") == -1) {
             log("gx");
-              gx();
+            gx();
         } else {
             log("bygx");
         }
@@ -401,4 +407,3 @@ threads.start(function() {
         log("jbsb");
     }
 })
-
