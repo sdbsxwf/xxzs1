@@ -76,7 +76,7 @@ ui.layout(
                         
                         <text text="坐标:" padding="22 8 0 8" />
                         
-                        <input id="zb" hint="1080*2408:坐标91,660,915,80" text="91,660,915,80" textSize="14sp" />
+                        <input id="zb" hint="1080*2408:坐标91,660,915,81,1580" text="91,660,915,80" textSize="14sp" />
                     </horizontal>
                     <text text="坐标:x,y,w,min_h,max_h" padding="22 8 0 8" />
                     <HorizontalScrollView>
@@ -185,7 +185,7 @@ function 读(文件名, 键, 默认值) {
 threads.start(function() {
     ui.run(function() {
         ui.jhms.setText(读("c", "jhm", 0));
-        ui.zb.setText(读("c", "zb", "91,660,915,80,1580"));
+        ui.zb.setText(读("c", "zb", "91,660,915,81,1580"));
     });
 })
 
