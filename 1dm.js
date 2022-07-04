@@ -10,7 +10,18 @@ try {
 } catch (e) {
     toastLog("缺少题库!");
 }
-
+threads.start(
+    function() {
+        toastLog("fwyc");
+        while (true) {
+            text("访问异常").waitFor();
+            log("yh");
+            swipe(191, 1257, 866, 1257, 1000);
+            sleep(1000);
+            click("刷新重试");
+            sleep(500);
+        }
+    });
 var yijianxue = {};
 
 
@@ -514,7 +525,7 @@ yijianxue.单答s = function() {
             var j1 = Number(x0.indexOf("A."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
-                  //  toastLog("点A" + xs1)
+                    //  toastLog("点A" + xs1)
                     click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
                     sleep(100);
                     click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
@@ -526,7 +537,7 @@ yijianxue.单答s = function() {
             var j1 = Number(x0.indexOf("B."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
-                  //  toastLog("点B" + xs1)
+                    //  toastLog("点B" + xs1)
                     click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
                     sleep(100);
                     click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
@@ -538,7 +549,7 @@ yijianxue.单答s = function() {
             var j1 = Number(x0.indexOf("C."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
-                  //  toastLog("点C" + xs1)
+                    //  toastLog("点C" + xs1)
                     click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
                     sleep(100);
                     click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
@@ -549,7 +560,7 @@ yijianxue.单答s = function() {
             var j1 = Number(x0.indexOf("D."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
-                   // toastLog("点D" + xs1)
+                    // toastLog("点D" + xs1)
                     click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
                     sleep(100);
                     click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
@@ -577,13 +588,13 @@ yijianxue.单答s = function() {
 //截图用图片转文字
 yijianxue.ocrs = function(imgFile) {
 
-  //  var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
-   
+    //  var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
+
     var ak = "xdarK0D4R0GGjr04efEv5Lzw";
     var sk = "MzBuIG2K5P7WoUUk1xmGwP8LMiKY5veD";
     //通过sk和sk,获得token;
     var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=" + ak + "&client_secret=" + sk).body.json().access_token;
-   
+
     url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" + "?access_token=" + access_token;
     var img = images.read(imgFile);
     var imag64 = images.toBase64(img, "png", 100);
@@ -744,7 +755,7 @@ yijianxue.每日 = function() {
                     sleep_sj(1000);
                     continue; //跳出单次循环。
                 }
-               // sleep_sj(2000)
+                // sleep_sj(2000)
                 if (text("填空题").exists()) {
                     toastLog(i + ">>填空题")
                     yijianxue.tkt();
@@ -785,7 +796,7 @@ function tishis() {
     return bb
 }
 //2每日答题-选择题点击。
-yijianxue.xuanxiang=function() {
+yijianxue.xuanxiang = function() {
     sleep_sj(2000)
     var tishitis = tishis() //查看提示。
     var xx = ["A.", "B.", "C.", "D.", "E."]
@@ -849,7 +860,7 @@ function tishi() {
     return ts_lists
 }
 //4每日答题-填空题点击。
-yijianxue.tkt=function() {
+yijianxue.tkt = function() {
     sleep_sj(2000)
     var tishiti = tishi() //查看提示。
     if (text("填空题").exists()) {
