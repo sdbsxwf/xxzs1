@@ -18,7 +18,20 @@ threads.start(
             log("yh");
             swipe(191, 1257, 866, 1257, 1000);
             sleep(1000);
-            click("刷新重试");
+            click("刷新");
+            sleep(500);
+            click("刷新");
+            sleep(500);
+        }
+    });
+    
+threads.start(
+    function() {
+        while (true) {
+            textContains("重试").waitFor();
+            log("cs");
+            sleep(500);
+            click("重试");
             sleep(500);
         }
     });
@@ -940,12 +953,17 @@ function fanhui() {
         for (let i = 10; i > 0; i--) {
             if (!text("强国通").exists()) {
                 console.info("返回")
-                back();
                 sleep_sj(2000)
+                if (text("访问异常").exists()) {
+                    toastLog("等十秒")
+                    sleep(10000);
+                }
                 // click("退出");
                 if (text("退出").exists()) {
                     text("退出").findOnce().click();
                 }
+                sleep_sj(5000);
+                back();
                 sleep_sj(1000);
             }
         }
