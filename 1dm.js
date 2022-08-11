@@ -24,7 +24,7 @@ threads.start(
             sleep(500);
         }
     });
-    
+
 threads.start(
     function() {
         while (true) {
@@ -77,10 +77,12 @@ yijianxue.启动app = function() {
     //截图请求
     //请求截图
     threads.start(function() {
-        if (!requestScreenCapture()) {
-            toast("请求截图失败");
-            // exit();
-        }
+        try {
+            if (!requestScreenCapture()) {
+                toast("请求截图失败");
+                // exit();
+            }
+        } catch (e) {}
     });
     try {
         //打开APP
@@ -460,11 +462,11 @@ yijianxue.挑战 = function() {
                 }
 
             }
-            if (text("分享就能复活").exists()) {
+            if (text("立即复活").exists()) {
                 sleep_sj(1000);
-                click_logs("分享就能复活");
+                click_logs("立即复活");
                 sleep_sj(3000);
-                back();
+                //  back();
                 sleep_sj(3000);
 
             }
