@@ -112,7 +112,7 @@ yijianxue.本地 = function() {
         var sfs = className("android.view.ViewGroup").find();
         if (sfs[3] != null) {
             //点击山东
-            sfs[3].child(3).click();
+            sfs[3].child(4).click();
             sleep_sj(3000);
             //var bddt = className("android.support.v7.widget.RecyclerView").find();
             var bddt = depth(25).className("androidx.recyclerview.widget.RecyclerView").findOne(5000);
