@@ -1,5 +1,5 @@
 "ui";
-
+//v2.38.0
 var yijianxue = require(files.path('./1dm.js'));
 
 var imei = device.getAndroidId(); //获取安卓id
