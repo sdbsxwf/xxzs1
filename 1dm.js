@@ -208,7 +208,7 @@ yijianxue.文次 = function() {
         sleep_sj(2000);
         //先滑动三页
         var aa = className("android.widget.ListView").find();
-        for (var i = 1; i < 4; i++) {
+        for (var j = 1; j < 4; j++) {
             aa.scrollForward();
             sleep_sj(2000);
         }
@@ -373,13 +373,14 @@ yijianxue.挑单答 = function() {
         var date1 = new Date(); //构造时间函数
         log("①已点答题按键");
         var xh = 0;
+        var tis="";
         do {
             log("读取问题中……");
             sleep(1000);
             var ti = className("android.widget.ListView").findOne(20000);
-            var tis = ti.parent().child(0).text();
+            tis = ti.parent().child(0).text();
             if (xh > 10) {
-                var tis = "没找到";
+                tis = "没找到";
                 toastLog("未找到题目")
             }
             xh++;
@@ -532,12 +533,13 @@ yijianxue.单答s = function() {
     var jies = zls(jie);
 
     var z0 = ti.children();
+    var j1="";
     for (var k = 1; k < d.length; k++) {
         var x0 = d[k]["words"];
         var xs0 = zls(x0)
         if (xs0 != "无" || xs0 != "") {
             var xs1 = xs0.slice(0, 5)
-            var j1 = Number(x0.indexOf("A."));
+            j1 = Number(x0.indexOf("A."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
                     //  toastLog("点A" + xs1)
@@ -549,7 +551,7 @@ yijianxue.单答s = function() {
                 }
             }
 
-            var j1 = Number(x0.indexOf("B."));
+            j1 = Number(x0.indexOf("B."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
                     //  toastLog("点B" + xs1)
@@ -561,7 +563,7 @@ yijianxue.单答s = function() {
                 }
             }
 
-            var j1 = Number(x0.indexOf("C."));
+            j1 = Number(x0.indexOf("C."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
                     //  toastLog("点C" + xs1)
@@ -572,7 +574,7 @@ yijianxue.单答s = function() {
 
                 }
             }
-            var j1 = Number(x0.indexOf("D."));
+            j1 = Number(x0.indexOf("D."));
             if (j1 != -1) {
                 if (jies.indexOf(xs1) != -1) {
                     // toastLog("点D" + xs1)
@@ -922,6 +924,7 @@ yijianxue.tkt = function() {
 //1打开题库。
 function tiku_2(tikues) {
     try {
+        var zidians="";
         var tikubl = tikues
         var file = open(tikubl, "r", "utf-8"); //读取文件的所有内容
         var text = file.read();
@@ -931,10 +934,10 @@ function tiku_2(tikues) {
             if (qukongge.length > 0) {
                 var texts = qukongge.slice(0, text.length - 1);
                 var ass = "[" + texts + "]";
-                var zidians = eval('(' + ass + ')');
+                zidians = eval('(' + ass + ')');
             }
         } else {
-            var zidians = eval('(' + text + ')');
+            zidians = eval('(' + text + ')');
         }
         file.close();
         return zidians;
@@ -1097,7 +1100,7 @@ function 读(文件名, 键, 默认值) {
     const storage = storages.create(文件名);
     if (storage.contains(键)) {
         return storage.get(键, 默认值);
-    };
+    }
     写(文件名, 键, 默认值);
     return 默认值;
 }
