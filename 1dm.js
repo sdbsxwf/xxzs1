@@ -63,6 +63,7 @@ function qdfh(c, s) {
 }
 //2启动强国函数。
 yijianxue.启动app = function() {
+    /*
     //截图立即开始
     threads.start(function() {
         var qx1 = text("立即开始").findOne(2000);
@@ -84,6 +85,7 @@ yijianxue.启动app = function() {
             }
         } catch (e) {}
     });
+    */
     try {
         //打开APP
         auto.waitFor();
@@ -153,11 +155,12 @@ yijianxue.评论分享 = function() {
         var pls = 0;
         while (pls < 5) {
             if (text("播报").exists()) {
-                var bobao = className("android.widget.TextView").text("播报").findOne(6000);
+                var bobao = className("android.widget.TextView").textStartsWith("播报").findOne(6000);
                 toastLog(bobao.parent().parent().parent().child(0).text());
+             //  bobao.parent().parent().parent().click();
                 //  toastLog(bobao.bounds().centerX() + " " + bobao.bounds().centerY());
                 click(bobao.bounds().centerX() - 200, bobao.bounds().centerY());
-                for (var i = 1; i < 3; i++) {
+                for (var i = 1; i < 2; i++) {
                     toastLog("第" + i + "次");
                     sleep_sj(4000);
                     //评论
@@ -173,12 +176,12 @@ yijianxue.评论分享 = function() {
                     sleep_sj(1000);
 
                     //分享
-                    className("android.widget.TextView").text("欢迎发表你的观点").findOne(6000).parent().child(3).click();
-                    sleep_sj(5000);
-                    className("android.widget.GridView").findOne(6000).child(0).click();
-                    sleep_sj(3000);
-                    back();
-                    sleep_sj(1500);
+                  //  className("android.widget.TextView").text("欢迎发表你的观点").findOne(6000).parent().child(3).click();
+                  //  sleep_sj(5000);
+                 //   className("android.widget.GridView").findOne(6000).child(0).click();
+                 //   sleep_sj(3000);
+                //    back();
+                 //   sleep_sj(1500);
                 }
                 fanhui();
                 break;
@@ -373,7 +376,7 @@ yijianxue.挑单答 = function() {
         var date1 = new Date(); //构造时间函数
         log("①已点答题按键");
         var xh = 0;
-        var tis="";
+        var tis = "";
         do {
             log("读取问题中……");
             sleep(1000);
@@ -445,7 +448,9 @@ yijianxue.挑单答 = function() {
 yijianxue.挑战 = function() {
     try {
         toastLog("开始:挑战答题");
-        datiyemian(10);
+
+        //  datiyemian(10);
+        datiyemian(6);
         sleep_sj(2000);
         for (var i = 0; i < 20; i++) {
             if (i < 6) {
@@ -491,110 +496,17 @@ yijianxue.挑战 = function() {
 ////单个答题2。
 //childCount
 yijianxue.单答s = function() {
-    // try {
-    log("已点答题按键");
-    var ti = depth(29).className("android.widget.ListView").findOne(25000);
-    //  var z = ti.parent().bounds()
-    // var z1 = z.left
-    // var z2 = z.top
-    //  var z3 = z.right
-    //  var z4 = z.bottom
-    var z = 读("c", "zb", "91,660,915,80,1580").split(",");
-    //  log("宽"+device.width+"高"+device.height)
-    //  var zs3=device.width - Number(z1) - 80
-    // var zs4=device.height - Number(z2) - 200
-    log(z[0] + "," + z[1] + "," + z[2] + "," + (Number(z[4])));
-    sleep(200);
-    var d = jietu(Number(z[0]), Number(z[1]), Number(z[2]), (Number(z[4])));
-    log(d);
-    if (d[0]["words"] == "") {
-        d = "失败"
-    } else {
-        log(d[0]["words"])
-    }
-    var jie = ""; //建空列表,放结果
-    for (var i = 0; i < tikus.length; i++) {
-        var ds = zl(d[0]["words"]);
-        var tks = zl(tikus[i].wenti);
-        var jieguo = tks.indexOf(ds); //问题匹配筛选。
-        if (jieguo >= 0) {
-            jie += tikus[i].da;
-            jie += tikus[i].daan;
-            jie += "\n"
-            // break;
-        }
-    }
     try {
-        toastLog("●" + jie.substr(0, 100)); //匹配字典答案结果。
-    } catch (e) {}
-    if (jie == "") {
-        jie = "没找到答案";
+        log("已点答题按键");
+        var ti = depth(29).className("android.widget.ListView").findOne(25000);
+        var z0 = ti.children();
+        click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
+        sleep(100);
+        click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
+
+    } catch (e) {
+        toastLog("错")
     }
-    var jies = zls(jie);
-
-    var z0 = ti.children();
-    var j1="";
-    for (var k = 1; k < d.length; k++) {
-        var x0 = d[k]["words"];
-        var xs0 = zls(x0)
-        if (xs0 != "无" || xs0 != "") {
-            var xs1 = xs0.slice(0, 5)
-            j1 = Number(x0.indexOf("A."));
-            if (j1 != -1) {
-                if (jies.indexOf(xs1) != -1) {
-                    //  toastLog("点A" + xs1)
-                    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
-                    sleep(100);
-                    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
-                    break;
-
-                }
-            }
-
-            j1 = Number(x0.indexOf("B."));
-            if (j1 != -1) {
-                if (jies.indexOf(xs1) != -1) {
-                    //  toastLog("点B" + xs1)
-                    click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
-                    sleep(100);
-                    click(z0[1].bounds().centerX(), z0[1].bounds().centerY());
-                    break;
-
-                }
-            }
-
-            j1 = Number(x0.indexOf("C."));
-            if (j1 != -1) {
-                if (jies.indexOf(xs1) != -1) {
-                    //  toastLog("点C" + xs1)
-                    click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
-                    sleep(100);
-                    click(z0[2].bounds().centerX(), z0[2].bounds().centerY());
-                    break;
-
-                }
-            }
-            j1 = Number(x0.indexOf("D."));
-            if (j1 != -1) {
-                if (jies.indexOf(xs1) != -1) {
-                    // toastLog("点D" + xs1)
-                    click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
-                    sleep(100);
-                    click(z0[3].bounds().centerX(), z0[3].bounds().centerY());
-                    break;
-
-                }
-            }
-
-        }
-    }
-    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
-    sleep(100);
-    click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
-
-    //   } catch (e) {
-    //     toastLog("错")
-    //  }
 }
 
 
@@ -605,10 +517,10 @@ yijianxue.单答s = function() {
 //截图用图片转文字
 yijianxue.ocrs = function(imgFile) {
 
-   //   var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
+    //   var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YIKKfQbdpYRRYtqqTPnZ5bCE&client_secret=hBxFiPhOCn6G9GH0sHoL0kTwfrCtndDj").body.json().access_token;
 
-   var ak = "xdarK0D4R0GGjr04efEv5Lzw";
-   var sk = "MzBuIG2K5P7WoUUk1xmGwP8LMiKY5veD";
+    var ak = "xdarK0D4R0GGjr04efEv5Lzw";
+    var sk = "MzBuIG2K5P7WoUUk1xmGwP8LMiKY5veD";
     //通过sk和sk,获得token;
     var access_token = http.get("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=" + ak + "&client_secret=" + sk).body.json().access_token;
 
@@ -694,7 +606,7 @@ yijianxue.单答不点2 = function() {
 //循环答题
 yijianxue.多答 = function() {
     //   setScreenMetrics(1080, 2408); //分辨率设置。
-    toastLog("答");
+    toastLog("只会点击A");
     //   sleep(7000);
     for (var i = 0; i < 20; i++) {
         //   toastLog(i + "有");
@@ -711,7 +623,8 @@ yijianxue.双人 = function() {
     try {
         toastLog("开始:双人对战答题");
         sleep_sj(2000);
-        datiyemian(9);
+        //   datiyemian(9);
+        datiyemian(8);
         sleep_sj(2000);
         var yqds = text("随机匹配").findOne(6000);
         yqds.parent().child(0).click();
@@ -736,7 +649,8 @@ yijianxue.争上 = function() {
         try {
             toastLog("开始:争上游答题");
             sleep_sj(2000);
-            datiyemian(8);
+            //  datiyemian(8);
+            datiyemian(7);
             sleep_sj(2000);
             click_logs("开始比赛");
             sleep(3000);
@@ -762,7 +676,8 @@ yijianxue.每日 = function() {
         try {
             toastLog("开始:每日答题");
             sleep_sj(2000)
-            datiyemian(2);
+            // datiyemian(2);
+            datiyemian(4);
             sleep_sj(2000);
             for (var i = 0; i < 5; i++) {
                 sleep_sj(1000)
@@ -924,7 +839,7 @@ yijianxue.tkt = function() {
 //1打开题库。
 function tiku_2(tikues) {
     try {
-        var zidians="";
+        var zidians = "";
         var tikubl = tikues
         var file = open(tikubl, "r", "utf-8"); //读取文件的所有内容
         var text = file.read();
@@ -985,15 +900,19 @@ function datiyemian(shu) {
         var shus = shu;
         sleep_sj(2000);
         if (text("强国通").exists()) {
-            className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).click();
+            //   className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).click();
+            className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).parent().child(0).child(1).click();
             sleep_sj(1500);
-            xinxi();
+            //   xinxi();
             sleep_sj(1500);
             click_logs("我要答题");
+            var aa = className("android.widget.ListView").findOne();
+            aa.child(shus).child(4).click();
+            //   click(537,886);
             sleep_sj(2000);
-            var tzdt = className("android.view.View").text("答题练习").findOne(6000);
-            tzdt.parent().child(shus).click();
-            sleep_sj(2000);
+            //   var tzdt = className("android.view.View").text("答题练习").findOne(6000);
+            //    tzdt.parent().child(shus).click();
+            //   sleep_sj(2000);
         }
     } catch (e) {
         toastLog("答题页面打开错误")

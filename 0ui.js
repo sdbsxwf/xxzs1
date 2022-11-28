@@ -51,7 +51,7 @@ ui.layout(
     <vertical>
         <appbar>
             
-            <toolbar id="toolbar" title="爱学习_V4.630" />
+            <toolbar id="toolbar" title="爱学习_V4.2.42" />
             
         </appbar>
         <viewpager id="vv">
@@ -105,7 +105,7 @@ ui.layout(
                         <button id="qx" w="auto" text="全选" />
                         <button id="fx" w="auto" text="反选" />
                     </horizontal>
-                    <text id="wws" text="重要提示:运行过程中，按音量上键结束运行。" textSize="14sp" padding="22 8 0 8" />
+                    <text id="wws" text="提示:运行过程中，按音量上键结束运行。2.38版后双人、争上不能用了。" textSize="14sp" padding="22 8 0 8" />
                     <text id="ggtz" text="" textSize="16sp" />
                     <horizontal gravity="center">
                         <button id="yjx" text="运行" w="auto" h="auto" circle="true" style="Widget.AppCompat.Button.Colored" textSize="18sp" />
