@@ -452,6 +452,8 @@ yijianxue.挑战 = function() {
         //  datiyemian(10);
         datiyemian(6);
         sleep_sj(2000);
+        click("时事政治");
+        sleep_sj(2000);
         for (var i = 0; i < 20; i++) {
             if (i < 6) {
                 //挑战答题
@@ -497,7 +499,7 @@ yijianxue.挑战 = function() {
 //childCount
 yijianxue.单答s = function() {
     try {
-        log("已点答题按键");
+        toastLog("单_已点答题按键");
         var ti = depth(29).className("android.widget.ListView").findOne(25000);
         var z0 = ti.children();
         click(z0[0].bounds().centerX(), z0[0].bounds().centerY());
@@ -649,7 +651,7 @@ yijianxue.争上 = function() {
         try {
             toastLog("开始:争上游答题");
             sleep_sj(2000);
-            //  datiyemian(8);
+          //   datiyemian(8);
             datiyemian(7);
             sleep_sj(2000);
             click_logs("开始比赛");
@@ -900,19 +902,19 @@ function datiyemian(shu) {
         var shus = shu;
         sleep_sj(2000);
         if (text("强国通").exists()) {
-            //   className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).click();
-            className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).parent().child(0).child(1).click();
+            //  className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).click();
+           className("android.widget.TextView").id("comm_head_xuexi_mine").text("我的").findOne(10000).parent().child(0).child(1).click();
             sleep_sj(1500);
             //   xinxi();
             sleep_sj(1500);
-            click_logs("我要答题");
+           // click_logs("我要答题");
             var aa = className("android.widget.ListView").findOne();
-            aa.child(shus).child(4).click();
+           aa.child(shus).child(4).click();
             //   click(537,886);
             sleep_sj(2000);
-            //   var tzdt = className("android.view.View").text("答题练习").findOne(6000);
-            //    tzdt.parent().child(shus).click();
-            //   sleep_sj(2000);
+         //  var tzdt = className("android.view.View").text("答题练习").findOne(6000);
+          //      tzdt.parent().child(shus).click();
+              sleep_sj(2000);
         }
     } catch (e) {
         toastLog("答题页面打开错误")
